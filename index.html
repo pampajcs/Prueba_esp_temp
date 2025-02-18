@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ESP8266 Temperatura</title>
-    <script>
+    <script>// Redirigir a HTTP si la página está en HTTPS
+        if (location.protocol === 'https:') {
+            location.replace('http://' + location.hostname + location.pathname);
+        }
         async function obtenerTemperatura() {
             try {
-                let response = await fetch('https://cors-anywhere.herokuapp.com/http://192.168.1.26/temperatura'); // Reemplaza con la IP real del ESP8266
+                let response = await fetch('http://192.168.1.26/temperatura'); // Reemplaza con la IP real del ESP8266
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
