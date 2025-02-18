@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP8266 Temperatura</title>
+    <script>
+        async function obtenerTemperatura() {
+            try {
+                let response = await fetch('http://192.168.1.26/temperatura'); // Reemplaza con la IP real del ESP8266
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                let data = await response.json();
+                document.getElementById("temp").innerText = data.temperatura + " °C";
+            } catch (error) {
+                console.error("Error obteniendo la temperatura", error);
+                document.getElementById("temp").innerText = "Error al obtener datos";
+            }
+        }
+        document.addEventListener("DOMContentLoaded", obtenerTemperatura); // Obtener temperatura al cargar
+        setInterval(obtenerTemperatura, 5000); // Actualizar cada 5 segundos
+    </script>
+</head>
+<body>
+    <h1>Temperatura en tiempo real</h1>
+    <p>Temperatura: <span id="temp">Cargando...</span></p>
+</body>
+</html>
